@@ -1,0 +1,29 @@
+# Make sure this is set to "kotlinforforge"
+modLoader="kotlinforforge"
+# Make sure this is set to the appropriate version range
+loaderVersion="[3,)" # Require at least 3.x
+# License is REQUIRED after 1.16
+license='MIT'
+
+[[mods]]
+modId="qulib"
+version="${file.jarVersion}"
+displayName="Qu Linrary"
+logoFile="icon.png"
+credits="https://github.com/LubieKakao1212/qulib/NOTICE"
+authors="LubieKakao1212"
+description='''
+Joml library with kotlin extensions packaged as minecraft mod.
+'''
+[[dependencies.qulib]]
+    modId="forge"
+    mandatory=true
+    versionRange="[39,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.examplemod]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.3, 1.20)"
+    ordering="NONE"
+    side="BOTH"
