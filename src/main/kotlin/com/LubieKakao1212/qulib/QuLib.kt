@@ -1,15 +1,9 @@
 package com.LubieKakao1212.qulib
 
-import com.LubieKakao1212.qulib.block.ModBlocks
-import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
-import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent
-import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
-import thedarkcolour.kotlinforforge.forge.runForDist
+import org.joml.Vector3d
 
 /**
  * Main mod class. Should be an `object` declaration annotated with `@Mod`.
@@ -18,32 +12,17 @@ import thedarkcolour.kotlinforforge.forge.runForDist
  *
  * An example for blocks is in the `blocks` package of this mod.
  */
-@Mod(ExampleMod.ID)
-object ExampleMod {
+@Mod(QuLib.ID)
+object QuLib {
     const val ID = "qulib"
 
     // the logger for our mod
     val LOGGER: Logger = LogManager.getLogger(ID)
 
-    /*init {
-        LOGGER.log(Level.INFO, "Hello world!")
-
-        // Register the KDeferredRegister to the mod-specific event bus
-        ModBlocks.REGISTRY.register(MOD_BUS)
-
-        val obj = runForDist(
-            clientTarget = {
-                MOD_BUS.addListener(ExampleMod::onClientSetup)
-                Minecraft.getInstance()
-            },
-            serverTarget = {
-                MOD_BUS.addListener(ExampleMod::onServerSetup)
-                "test"
-            })
-
-        println(obj)
+    init {
     }
 
+    /*
     *//**
      * This is used for initializing client specific
      * things such as renderers and keymaps

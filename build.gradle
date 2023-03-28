@@ -13,9 +13,6 @@ buildscript {
         classpath 'org.parchmentmc:librarian:1.+'
     }
 }
-plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
-}
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'kotlin'
@@ -116,10 +113,6 @@ dependencies {
 
     implementation 'thedarkcolour:kotlinforforge:3.8.0'
 
-    minecraftLibrary "org.joml:joml:${jomlVersion}"
-
-    shade "org.joml:joml:${jomlVersion}"
-
     groovy.lang.Closure exclude_annotations = { exclude group: 'org.jetbrains', module: 'annotations' }
 
     library(group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version, exclude_annotations)
@@ -162,7 +155,6 @@ jar.finalizedBy('sourcesJar')
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact shadowJar
             artifact sourcesJar
 
             groupId = 'com.LubieKakao1212.qulib-kt'
@@ -174,25 +166,3 @@ publishing {
         }
     }
 }
-
-
-shadowJar {
-    classifier = ""
-    configurations = [project.configurations.shade]
-    relocate 'org.joml', "${project.group}.libs.joml"
-    //relocate 'com.fathzer', "${project.group}.libs.javaluator"
-    finalizedBy 'reobfShadowJar'
-}
-
-tasks.build.dependsOn shadowJar
-artifacts {
-    archives shadowJar
-}
-
-reobf {
-    shadowJar {
-    }
-}
-tasks.reobfShadowJar.mustRunAfter shadowJar
-
-tasks.build.dependsOn reobfShadowJar
