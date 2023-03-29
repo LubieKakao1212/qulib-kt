@@ -7,7 +7,6 @@ import net.minecraft.nbt.DoubleTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
 import net.minecraft.world.phys.Vec3
-import org.joml.Quaterniond
 import org.joml.Vector3d
 
 object Vector3dExtensions {
@@ -99,4 +98,14 @@ object Vector3dExtensions {
         }
         return this;
     }
+
+    /**
+     * May miscalculate for non normalized vectors
+     */
+    fun Vector3d.anyPerpendicular() : Vector3d {
+        return if (this.axisComparison(Consts.SOUTH) < MathUtil.epsilon * MathUtil.epsilon) {
+            return Vector3d(0.0, -z, y)
+        } else return Vector3d(-y, x, 0.0)
+    }
+
 }

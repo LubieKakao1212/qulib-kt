@@ -24,8 +24,8 @@ object AABBExtensions {
             corner.x - x1, corner.y - y1, corner.z - z1,
             corner.x + x1, corner.y + y1, corner.z + z1)
     }
+}
 
-    operator fun AABB.contains(point: Vector3d) : Boolean {
-        return this.contains(point.x, point.y, point.z)
-    }
+operator fun AABB.contains(point: Vector3d) : Boolean {
+    return this.contains(point.x, point.y, point.z)
 }
