@@ -2,7 +2,7 @@ package com.LubieKakao1212.qulib.physics.raycast
 
 import com.LubieKakao1212.qulib.QuLib
 import com.LubieKakao1212.qulib.math.MathUtil
-import com.LubieKakao1212.qulib.physics.raycast.config.IRaycastConfig
+import com.LubieKakao1212.qulib.physics.raycast.config.RaycastResultConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.Level
@@ -17,7 +17,7 @@ import kotlin.math.min
 
 const val raycastEpsilon = 0.001
 
-fun List<RaycastHit<*>>.configure(cfg : IRaycastConfig) : List<RaycastHit<*>> {
+fun List<RaycastHit<*>>.configure(cfg : RaycastResultConfig) : List<RaycastHit<*>> {
     return cfg.apply(this)
 }
 
