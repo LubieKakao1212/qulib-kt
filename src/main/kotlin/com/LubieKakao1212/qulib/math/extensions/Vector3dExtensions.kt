@@ -40,72 +40,72 @@ object Vector3dExtensions {
     val DOWN
         get() = Vector3d(Consts.DOWN)
 
-    fun Vector3d.from(pos: BlockPos) : Vector3d {
-        this.x = pos.x.toDouble()
-        this.y = pos.y.toDouble()
-        this.z = pos.z.toDouble()
-        return this;
-    }
+}
 
-    fun Vector3d.from(pos: Vec3) : Vector3d {
-        this.x = pos.x
-        this.y = pos.y
-        this.z = pos.z
-        return this;
-    }
+fun Vector3d.from(pos: BlockPos) : Vector3d {
+    this.x = pos.x.toDouble()
+    this.y = pos.y.toDouble()
+    this.z = pos.z.toDouble()
+    return this;
+}
 
-    fun Vector3d.from(dir: Direction) : Vector3d {
-        when(dir){
-           Direction.SOUTH -> this.set(Consts.SOUTH)
-           Direction.NORTH -> this.set(Consts.NORTH)
-           Direction.EAST -> this.set(Consts.EAST)
-           Direction.WEST -> this.set(Consts.WEST)
-           Direction.UP -> this.set(Consts.UP)
-           Direction.DOWN -> this.set(Consts.DOWN)
-        }
-        return this;
-    }
+fun Vector3d.from(pos: Vec3) : Vector3d {
+    this.x = pos.x
+    this.y = pos.y
+    this.z = pos.z
+    return this;
+}
 
-    fun Vector3d.equalsApprox(two: Vector3d, epsilon: Double = MathUtil.epsilon): Boolean {
-        return this.distanceSquared(two) < epsilon * epsilon
+fun Vector3d.from(dir: Direction) : Vector3d {
+    when(dir){
+        Direction.SOUTH -> this.set(Vector3dExtensions.Consts.SOUTH)
+        Direction.NORTH -> this.set(Vector3dExtensions.Consts.NORTH)
+        Direction.EAST -> this.set(Vector3dExtensions.Consts.EAST)
+        Direction.WEST -> this.set(Vector3dExtensions.Consts.WEST)
+        Direction.UP -> this.set(Vector3dExtensions.Consts.UP)
+        Direction.DOWN -> this.set(Vector3dExtensions.Consts.DOWN)
     }
+    return this;
+}
 
-    /**
-     * a.axisComparison(b) = b.axisComparison(a)
-     * @return squared distance from [this] point to [two] axis multiplied by square magnitude of [two]
-     */
-    fun Vector3d.axisComparison(two: Vector3d) : Double {
-        val d = this.dot(two)
-        val l = this.lengthSquared() * two.lengthSquared()
-        return l - d * d
+fun Vector3d.equalsApprox(two: Vector3d, epsilon: Double = MathUtil.epsilon): Boolean {
+    return this.distanceSquared(two) < epsilon * epsilon
+}
+
+/**
+ * a.axisComparison(b) = b.axisComparison(a)
+ * @return squared distance from [this] point to [two] axis multiplied by square magnitude of [two]
+ */
+fun Vector3d.axisComparison(two: Vector3d) : Double {
+    val d = this.dot(two)
+    val l = this.lengthSquared() * two.lengthSquared()
+    return l - d * d
+}
+
+fun Vector3d.serializeNBT() : ListTag {
+    val tag = ListTag();
+    tag.add(DoubleTag.valueOf(this.x))
+    tag.add(DoubleTag.valueOf(this.y))
+    tag.add(DoubleTag.valueOf(this.z))
+    return tag
+}
+
+fun Vector3d.deserializeNBT(tag : ListTag) : Vector3d {
+    if(tag.elementType != Tag.TAG_ANY_NUMERIC && tag.count() != 3){
+        this.set(
+            tag.getDouble(0),
+            tag.getDouble(1),
+            tag.getDouble(2)
+        )
     }
+    return this;
+}
 
-    fun Vector3d.serializeNBT() : ListTag {
-        val tag = ListTag();
-        tag.add(DoubleTag.valueOf(this.x))
-        tag.add(DoubleTag.valueOf(this.y))
-        tag.add(DoubleTag.valueOf(this.z))
-        return tag
-    }
-
-    fun Vector3d.deserializeNBT(tag : ListTag) : Vector3d {
-        if(tag.elementType != Tag.TAG_ANY_NUMERIC && tag.count() != 3){
-            this.set(
-                tag.getDouble(0),
-                tag.getDouble(1),
-                tag.getDouble(2)
-            )
-        }
-        return this;
-    }
-
-    /**
-     * May miscalculate for non normalized vectors
-     */
-    fun Vector3d.anyPerpendicular() : Vector3d {
-        return if (this.axisComparison(Consts.SOUTH) < MathUtil.epsilon * MathUtil.epsilon) {
-            return Vector3d(0.0, -z, y)
-        } else return Vector3d(-y, x, 0.0)
-    }
-
+/**
+ * May miscalculate for non normalized vectors
+ */
+fun Vector3d.anyPerpendicular() : Vector3d {
+    return if (this.axisComparison(Vector3dExtensions.Consts.SOUTH) < MathUtil.epsilon * MathUtil.epsilon) {
+        return Vector3d(0.0, -z, y)
+    } else return Vector3d(-y, x, 0.0)
 }

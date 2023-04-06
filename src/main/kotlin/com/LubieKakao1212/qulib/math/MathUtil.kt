@@ -1,9 +1,5 @@
 package com.LubieKakao1212.qulib.math
 
-import com.LubieKakao1212.qulib.math.MathUtil.equals
-import org.joml.Vector3d
-import kotlin.math.abs
-
 object MathUtil {
 
     const val degToRad = (Math.PI / 180.0).toFloat()
@@ -25,5 +21,19 @@ object MathUtil {
         return c + min
     }
 
+    fun nonZeroSign(value: Double): Long {
+        return negativeSign(value) or 1L
+    }
+
+    fun negativeSign(value: Double): Long {
+        return value.toRawBits() shr 63
+    }
+
+    /**
+     * @param value should be either -1 or 1
+     */
+    fun nonNegative(value : Int) : Int {
+        return (value + 1) shr 1
+    }
 
 }

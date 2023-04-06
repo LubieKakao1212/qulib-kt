@@ -1,10 +1,6 @@
 package com.LubieKakao1212.qulib.math
 
-import com.LubieKakao1212.qulib.math.extensions.Vector3dExtensions
-import com.LubieKakao1212.qulib.math.extensions.Vector3dExtensions.anyPerpendicular
-import com.LubieKakao1212.qulib.math.extensions.Vector3dExtensions.from
-import com.LubieKakao1212.qulib.math.extensions.mul
-import com.LubieKakao1212.qulib.math.extensions.times
+import com.LubieKakao1212.qulib.math.extensions.*
 import net.minecraft.core.Direction
 import org.joml.Quaterniond
 import org.joml.Vector3d
