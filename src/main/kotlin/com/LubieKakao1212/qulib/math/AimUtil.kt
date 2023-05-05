@@ -11,7 +11,7 @@ fun Random.randomSpread(aim: Quaterniond, maxSpread: Double, forward : Vector3d 
 }
 
 fun Random.fixedSpread(aim: Quaterniond, spread: Double, forward : Vector3d = Vector3dExtensions.NORTH) : Vector3d {
-    return calculateForwardWithSpread(aim, spread, nextDouble() * Math.PI * 2.0)
+    return calculateForwardWithSpread(aim, spread, nextDouble() * Math.PI * 2.0, forward)
 }
 
 fun calculateForwardWithSpread(aim : Quaterniond, spread: Double, roll : Double, forward : Vector3d = Vector3dExtensions.NORTH) : Vector3d {

@@ -130,7 +130,7 @@ fun raycastBlocksUntil(level: Level, origin: Vector3d, direction: Vector3d, rang
     return result
 }
 
-fun AABB.intersectionPoints(origin: Vector3d, direction: Vector3d): IntersectionPoints {
+fun AABB.intersect(origin: Vector3d, direction: Vector3d): IntersectionPoints {
     val dir = removeZero(direction, raycastEpsilon)
     return intersectionPoints(this, origin, dir)
 }
