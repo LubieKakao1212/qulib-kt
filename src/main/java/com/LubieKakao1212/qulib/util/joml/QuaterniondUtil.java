@@ -8,6 +8,7 @@ import org.joml.Quaterniond;
 /**
  * @deprecated For backwards compatibility
  */
+@Deprecated
 public class QuaterniondUtil {
 
     public static double smallerAngle(Quaterniond a, Quaterniond b) {

@@ -12,6 +12,7 @@ import org.joml.Vector3d;
 /**
  * @deprecated For backwards compatibility
  */
+@Deprecated
 public class JomlNBT {
 
     public static Quaterniond readQuaternion(@NotNull ListTag nbt) {

@@ -9,6 +9,7 @@ import org.joml.Vector3d;
 /**
  * @deprecated For backwards compatibility
  */
+@Deprecated
 public class Vector3dUtil {
 
     public static Vector3d south() {
