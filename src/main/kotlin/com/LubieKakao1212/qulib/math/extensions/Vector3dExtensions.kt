@@ -1,6 +1,6 @@
 package com.LubieKakao1212.qulib.math.extensions
 
-import com.LubieKakao1212.qulib.math.MathUtil
+import com.LubieKakao1212.qulib.math.Constants
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.DoubleTag
@@ -42,18 +42,25 @@ object Vector3dExtensions {
 
 }
 
-fun Vector3d.from(pos: BlockPos) : Vector3d {
+fun Vector3d.fromCorner(pos: BlockPos) : Vector3d {
     this.x = pos.x.toDouble()
     this.y = pos.y.toDouble()
     this.z = pos.z.toDouble()
     return this;
 }
 
+fun Vector3d.fromCenter(pos: BlockPos) : Vector3d {
+    this.x = pos.x.toDouble() + 0.5
+    this.y = pos.y.toDouble() + 0.5
+    this.z = pos.z.toDouble() + 0.5
+    return this
+}
+
 fun Vector3d.from(pos: Vec3) : Vector3d {
     this.x = pos.x
     this.y = pos.y
     this.z = pos.z
-    return this;
+    return this
 }
 
 fun Vector3d.from(dir: Direction) : Vector3d {
@@ -65,10 +72,10 @@ fun Vector3d.from(dir: Direction) : Vector3d {
         Direction.UP -> this.set(Vector3dExtensions.Consts.UP)
         Direction.DOWN -> this.set(Vector3dExtensions.Consts.DOWN)
     }
-    return this;
+    return this
 }
 
-fun Vector3d.equalsApprox(two: Vector3d, epsilon: Double = MathUtil.epsilon): Boolean {
+fun Vector3d.equalsApprox(two: Vector3d, epsilon: Double = Constants.epsilon): Boolean {
     return this.distanceSquared(two) < epsilon * epsilon
 }
 
@@ -83,7 +90,7 @@ fun Vector3d.axisComparison(two: Vector3d) : Double {
 }
 
 fun Vector3d.serializeNBT() : ListTag {
-    val tag = ListTag();
+    val tag = ListTag()
     tag.add(DoubleTag.valueOf(this.x))
     tag.add(DoubleTag.valueOf(this.y))
     tag.add(DoubleTag.valueOf(this.z))
@@ -98,14 +105,22 @@ fun Vector3d.deserializeNBT(tag : ListTag) : Vector3d {
             tag.getDouble(2)
         )
     }
-    return this;
+    return this
 }
 
 /**
  * May miscalculate for non normalized vectors
  */
 fun Vector3d.anyPerpendicular() : Vector3d {
-    return if (this.axisComparison(Vector3dExtensions.Consts.SOUTH) < MathUtil.epsilon * MathUtil.epsilon) {
-        return Vector3d(0.0, -z, y)
-    } else return Vector3d(-y, x, 0.0)
+    return if (this.axisComparison(Vector3dExtensions.Consts.SOUTH) < Constants.epsilon * Constants.epsilon) {
+        Vector3d(0.0, -z, y)
+    } else Vector3d(-y, x, 0.0)
+}
+
+operator fun Vector3d.plus(other : Vector3d) : Vector3d {
+    return this.add(other, Vector3d())
+}
+
+operator fun Vector3d.minus(other : Vector3d) : Vector3d {
+    return this.sub(other, Vector3d())
 }

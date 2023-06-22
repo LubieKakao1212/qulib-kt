@@ -1,7 +1,8 @@
 package com.LubieKakao1212.qulib.physics.raycast
 
 import com.LubieKakao1212.qulib.QuLib
-import com.LubieKakao1212.qulib.math.MathUtil
+import com.LubieKakao1212.qulib.math.nonNegative
+import com.LubieKakao1212.qulib.math.nonZeroSign
 import com.LubieKakao1212.qulib.physics.raycast.config.RaycastResultConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.Entity
@@ -46,25 +47,37 @@ fun raycastBlocksAll(level: Level, origin: Vector3d, direction: Vector3d, range:
     }
 }
 
-fun raycastBlocksUntil(level: Level, origin: Vector3d, direction: Vector3d, range: Double, continuationPredicate : (RaycastHit<BlockStatePos>) -> Boolean): List<RaycastHit<BlockStatePos>> {
-    removeZero(direction, raycastEpsilon)
+fun raycastBlocksUntil(level: Level, origin: Vector3d, direction: Vector3d, range: Double, enterFirst : Boolean = true, continuationPredicate : (RaycastHit<BlockStatePos>) -> Boolean): List<RaycastHit<BlockStatePos>> {
     val result: MutableList<RaycastHit<BlockStatePos>> = mutableListOf()
 
-    val dirX = MathUtil.nonZeroSign(direction.x).toInt()
-    val dirY = MathUtil.nonZeroSign(direction.y).toInt()
-    val dirZ = MathUtil.nonZeroSign(direction.z).toInt()
+    raycastGridUntil(origin, direction, range, enterFirst) {
+        addIfValid(
+            result, level, it.target, it.intersection
+        )
+        continuationPredicate(result.last())
+    }
+
+    return result
+}
+
+fun raycastGridUntil(origin: Vector3d, direction: Vector3d, range: Double, enterSelf : Boolean, enterDelegate : (RaycastHit<Vector3i>) -> Boolean) {
+    removeZero(direction, raycastEpsilon)
+
+    val dirX = nonZeroSign(direction.x).toInt()
+    val dirY = nonZeroSign(direction.y).toInt()
+    val dirZ = nonZeroSign(direction.z).toInt()
 
     // 1 -> 1
     // -1 -> 0
-    val dirXn = MathUtil.nonNegative(dirX).toDouble()
-    val dirYn = MathUtil.nonNegative(dirY).toDouble()
-    val dirZn = MathUtil.nonNegative(dirZ).toDouble()
+    val dirXn = nonNegative(dirX).toDouble()
+    val dirYn = nonNegative(dirY).toDouble()
+    val dirZn = nonNegative(dirZ).toDouble()
 
     // 1 -> -1 -> 0
     // -1 -> 1 -> 1
-    val dirXp = MathUtil.nonNegative(-dirX).toDouble()
-    val dirYp = MathUtil.nonNegative(-dirY).toDouble()
-    val dirZp = MathUtil.nonNegative(-dirZ).toDouble()
+    val dirXp = nonNegative(-dirX).toDouble()
+    val dirYp = nonNegative(-dirY).toDouble()
+    val dirZp = nonNegative(-dirZ).toDouble()
 
     val originBlockPos = origin.floor(Vector3d())
     val currentBlockPos = Vector3i(originBlockPos.x.toInt(), originBlockPos.y.toInt(), originBlockPos.z.toInt())
@@ -88,14 +101,16 @@ fun raycastBlocksUntil(level: Level, origin: Vector3d, direction: Vector3d, rang
     val tMin = tMin(tMaxX, tMinX, tMaxY, tMinY, tMaxZ, tMinZ)
     var tMax = tMax(tMaxX, tMinX, tMaxY, tMinY, tMaxZ, tMinZ)
 
-    //We do not add the block we are in
-    addIfValid(
-        result, level!!, currentBlockPos, IntersectionPoints(
+    if (enterSelf) {
+        if(!enterDelegate(RaycastHit(
+            IntersectionPoints(
             tMin, tMax,
             direction.mulAdd(tMin, origin, Vector3d()),
             direction.mulAdd(tMax, origin, Vector3d())
-        )
-    )
+        ), currentBlockPos)))
+            return
+    }
+
     var i = 0
     while (tMax < range) {
         if (tMaxX < tMaxY && tMaxX < tMaxZ) {
@@ -117,7 +132,7 @@ fun raycastBlocksUntil(level: Level, origin: Vector3d, direction: Vector3d, rang
             direction
         )
         tMax = intersections.distanceMax
-        if(addIfValid(result, level, currentBlockPos, intersections) && !continuationPredicate(result.last()))
+        if(!enterDelegate(RaycastHit(intersections, currentBlockPos)))
         {
             break
         }
@@ -127,8 +142,8 @@ fun raycastBlocksUntil(level: Level, origin: Vector3d, direction: Vector3d, rang
             break
         }
     }
-    return result
 }
+
 
 fun AABB.intersect(origin: Vector3d, direction: Vector3d): IntersectionPoints {
     val dir = removeZero(direction, raycastEpsilon)

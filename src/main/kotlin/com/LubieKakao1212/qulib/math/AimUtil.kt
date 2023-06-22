@@ -29,7 +29,7 @@ fun calculateForwardWithSpread(spread: Double, roll : Double, forward : Vector3d
 }
 
 fun Quaterniond.aimDeg(pitch: Double, yaw: Double): Quaterniond {
-    return this.aimRad(pitch * MathUtil.degToRad, yaw * MathUtil.degToRad)
+    return this.aimRad(pitch * Constants.degToRad, yaw * Constants.degToRad)
 }
 
 fun Quaterniond.aimRad(pitch: Double, yaw: Double): Quaterniond {
@@ -41,5 +41,5 @@ fun Quaterniond.aimRad(pitch: Double, yaw: Double, leftOrientation: Direction, u
 }
 
 fun Quaterniond.aimRad(pitch: Double, yaw: Double, left: Vector3d, up: Vector3d): Quaterniond {
-    return Quaterniond().fromAxisAngleRad(up, -yaw).mul(Quaterniond().fromAxisAngleRad(left, -pitch))
+    return this.fromAxisAngleRad(up, -yaw).mul(Quaterniond().fromAxisAngleRad(left, -pitch))
 }
