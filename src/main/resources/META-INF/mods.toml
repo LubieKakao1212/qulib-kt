@@ -8,7 +8,7 @@ license='MIT'
 [[mods]]
 modId="qulib"
 version="${file.jarVersion}"
-displayName="Qu Linrary"
+displayName="Qu Library"
 logoFile="icon.png"
 credits="https://github.com/LubieKakao1212/qulib/NOTICE"
 authors="LubieKakao1212"
