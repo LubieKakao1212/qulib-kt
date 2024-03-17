@@ -1,0 +1,28 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[4,)"
+#issueTrackerURL = ""
+license = "Insert License Here"
+
+[[mods]]
+modId = "qulib"
+version = "${version}"
+displayName = "Qu Library"
+authors = "LubieKakao1212"
+description = '''
+Vector math utilities library.
+'''
+logoFile = "../assets/qulib/icon.png"
+
+[[dependencies.qulib]]
+modId = "forge"
+mandatory = true
+versionRange = "[45,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.qulib]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.4,)"
+ordering = "NONE"
+side = "BOTH"

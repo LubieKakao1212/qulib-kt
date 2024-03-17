@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "qulib",
+	"version": "${version}",
+	"name": "Qu Library",
+	"description": "Vector math utilities library.",
+	"authors": [
+		"LubieKakao1212"
+	],
+	"contact": {
+		"sources": "https://github.com/LubieKakao1212/qulib-kt"
+	},
+	"license": "MIT",
+	"icon": "assets/qulib/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "com.lubiekakao1212.qulib.QuLib",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+	],
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.19.4",
+		"java": ">=17",
+		"fabric-language-kotlin": ">=1.9.22"
+	},
+	"suggests": {
+	}
+}
