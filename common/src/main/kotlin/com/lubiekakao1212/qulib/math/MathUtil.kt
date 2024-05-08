@@ -20,6 +20,14 @@ fun loop(a: Float, min: Float, max: Float): Float {
     return c + min
 }
 
+fun lerp(a: Double, b: Double, t: Double) : Double {
+    return  a + (b - a) * t;
+}
+
+fun lerpPrecise(a: Double, b: Double, t: Double) : Double {
+    return (a * (1 - t)) + (b * t);
+}
+
 fun nonZeroSign(value: Double): Long {
     return negativeSign(value) or 1L
 }

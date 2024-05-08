@@ -39,6 +39,14 @@ fun Quaterniond.aimRad(pitch: Double, yaw: Double): Quaterniond {
     return aimRad(pitch, yaw, Direction.WEST, Direction.UP)
 }
 
+fun aimDeg(pitch: Double, yaw: Double) : Aim {
+    return Aim(pitch * Constants.degToRad, yaw * Constants.degToRad)
+}
+
+fun aimRad(pitch: Double, yaw: Double) : Aim {
+    return Aim(pitch, yaw)
+}
+
 fun Quaterniond.aimRad(pitch: Double, yaw: Double, leftOrientation: Direction, upOrientation: Direction): Quaterniond {
     return aimRad(pitch, yaw,
         Vector3d().from(leftOrientation),
