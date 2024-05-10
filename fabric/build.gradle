@@ -70,7 +70,7 @@ publishing {
         mavenFabric(MavenPublication) {
             artifactId = "$rootProject.archives_base_name-${project.loader}-$minecraft_version"
             from components.kotlin
-            sourcesJar
+            from components.java
         }
     }
 
