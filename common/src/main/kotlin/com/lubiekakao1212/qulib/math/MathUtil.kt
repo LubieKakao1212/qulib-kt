@@ -31,6 +31,10 @@ fun loop(a: Float, min: Float, max: Float) : Float {
  *  @return value in range -pi, pi
  */
 fun Double.loopAngle() : Double {
+    return (this + PI).mod(Constants.TAU) - PI
+}
+
+private fun Double.loopAngle2() : Double{
     return this.mod(Constants.TAU) - PI
 }
 
@@ -39,8 +43,8 @@ fun Double.loopAngle() : Double {
  * Assumes both a and b are in range -pi, pi
  */
 fun angleDistance(a : Double, b : Double): Double {
-    val a1 = a.loopAngle()
-    val b1 = b.loopAngle()
+    val a1 = a.loopAngle2()
+    val b1 = b.loopAngle2()
 
     val d1 = abs(b - a)
     val d2 = abs(b1 - a1)
@@ -81,7 +85,6 @@ fun stepAngle(a : Double, b : Double, maxDelta : Double) : Double {
 fun Double.stepToAngle(b : Double, maxDelta : Double) : Double {
     return stepAngle(this, b, maxDelta)
 }
-
 
 fun Double.stepTo(b : Double, maxDelta : Double) : Double {
     val d1 = b - this
