@@ -65,8 +65,8 @@ class Aim(pitchIn : Double, yawIn : Double) {
     }
 
     fun equals(other : Aim, pitchEpsilon : Double = Constants.epsilon, yawEpsilon : Double = Constants.epsilon) : Boolean {
-        val dp = abs(pitch - other.pitch)
-        val dy = abs(yaw - other.yaw)
+        val dp = this.pitch.angleDistanceTo(other.pitch)
+        val dy = abs(this.yaw - other.yaw)
 
         return dp < pitchEpsilon && dy < yawEpsilon
     }
