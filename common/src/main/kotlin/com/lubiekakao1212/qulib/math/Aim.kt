@@ -30,6 +30,12 @@ class Aim(pitchIn : Double, yawIn : Double) {
         return dst
     }
 
+    fun set(target : Aim) : Aim {
+        this.pitch = target.pitch
+        this.yaw = target.yaw
+        return this
+    }
+
     fun stepRaw(target : Aim, maxDelta : Double, dst : Aim = this) : Aim {
         val dp = pitch.angleDistanceTo(target.pitch)
         val dy = yaw - target.yaw
