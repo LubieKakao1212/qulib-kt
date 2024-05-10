@@ -5,6 +5,7 @@ import org.joml.Math
 import org.joml.Quaterniond
 import org.joml.Vector3d
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 class Aim(pitchIn : Double, yawIn : Double) {
@@ -51,6 +52,17 @@ class Aim(pitchIn : Double, yawIn : Double) {
         dst.pitch = lerpAngle(pitch, b.pitch, t)
         dst.yaw = lerp(yaw, b.yaw, t)
         return dst
+    }
+
+    fun equals(other : Aim, epsilon : Double = Constants.epsilon) : Boolean {
+        return equals(other, epsilon, epsilon)
+    }
+
+    fun equals(other : Aim, pitchEpsilon : Double = Constants.epsilon, yawEpsilon : Double = Constants.epsilon) : Boolean {
+        val dp = abs(pitch - other.pitch)
+        val dy = abs(yaw - other.yaw)
+
+        return dp < pitchEpsilon && dy < yawEpsilon
     }
 
     fun toQuaternion() : Quaterniond {
