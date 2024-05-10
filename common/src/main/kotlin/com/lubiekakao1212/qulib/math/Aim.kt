@@ -10,12 +10,12 @@ import kotlin.math.sqrt
 
 class Aim(pitchIn : Double, yawIn : Double) {
 
-    var pitch = pitchIn
+    var pitch = Math.clamp(-PI / 2, PI / 2, pitchIn)
         set(value) {
             field = Math.clamp(-PI / 2, PI / 2, value)
         }
 
-    var yaw = yawIn
+    var yaw = yawIn.loopAngle()
         set(value) {
             field = value.loopAngle()
         }
