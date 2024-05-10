@@ -17,24 +17,6 @@ architectury {
     minecraft = rootProject.minecraft_version
 }
 
-subprojects {
-    apply plugin: "dev.architectury.loom"
-
-    loom {
-        silentMojangMappingsLicense()
-    }
-
-    base {
-        archivesName = "$rootProject.archives_base_name-${project.loader}-$minecraft_version"
-    }
-
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        // The following line declares the yarn mappings you may select this one as well.
-        mappings "net.fabricmc:yarn:1.19.4+build.2:v2"
-    }
-}
-
 allprojects {
     apply plugin: "java"
     apply plugin: "kotlin"
@@ -67,5 +49,52 @@ allprojects {
 
     java {
         withSourcesJar()
+    }
+
+    /*kotlin {
+        withSourcesJar()
+    }*/
+}
+
+subprojects {
+    apply plugin: "dev.architectury.loom"
+
+    loom {
+        silentMojangMappingsLicense()
+    }
+
+    base {
+        archivesName = "$rootProject.archives_base_name-${project.loader}-$minecraft_version"
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        // The following line declares the yarn mappings you may select this one as well.
+        mappings "net.fabricmc:yarn:1.19.4+build.2:v2"
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifactId = "$rootProject.archives_base_name-${project.loader}-$minecraft_version"
+                from components.java
+            }
+        }
+
+        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+        repositories {
+            maven {
+                name = "GitHubPackages-qulib-kt"
+                url = uri("https://maven.pkg.github.com/LubieKakao1212/qulib-kt")
+                credentials {
+                    username = accessProps.ghUsr ?: System.getenv("USERNAME")
+                    password = accessProps.ghPkgPAT ?: System.getenv("TOKEN")
+                }
+            }
+            /*maven {
+                name = "MavenLocal"
+                url = "file://C:/maven-local/mcmodsrepo"
+            }*/
+        }
     }
 }
