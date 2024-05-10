@@ -74,12 +74,15 @@ fun stepAngle(a : Double, b : Double, maxDelta : Double) : Double {
 
     val b2 = if(a1 > b1) b1 + Constants.TAU else b1 - Constants.TAU
 
-    val d1 = abs(a1 - b1)
-    val d2 = abs(a1 - b2)
+    val sd1 = b1 - a1
+    val sd2 = b2 - a1
+
+    val d1 = abs(sd1)
+    val d2 = abs(sd2)
 
     val d = min(min(d1, d2), maxDelta)
 
-    return a + if(d1 < d2) d*sign(d1) else d*sign(d2)
+    return a + d * (if(d1 < d2) sign(sd1) else sign(sd2))
 }
 
 fun Double.stepToAngle(b : Double, maxDelta : Double) : Double {
