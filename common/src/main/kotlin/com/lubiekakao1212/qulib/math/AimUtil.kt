@@ -24,7 +24,7 @@ fun calculateForwardWithSpread(aim : Quaterniond, spread: Double, roll : Double,
 fun calculateForwardWithSpread(spread: Double, roll : Double, forward : Vector3d) : Vector3d {
     val side = forward.anyPerpendicular()
 
-    val rotSide = Quaterniond().fromAxisAngleDeg(side, spread)
+    val rotSide = Quaterniond().fromAxisAngleRad(side, spread)
 
     val rotRound = Quaterniond().fromAxisAngleRad(forward, roll)
 
