@@ -11,7 +11,7 @@ authors = "LubieKakao1212"
 description = '''
 Vector math utilities library.
 '''
-logoFile = "../assets/qulib/icon.png"
+logoFile = "../icon.png"
 
 [[dependencies.qulib]]
 modId = "forge"

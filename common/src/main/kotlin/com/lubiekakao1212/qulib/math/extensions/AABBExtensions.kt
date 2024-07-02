@@ -1,5 +1,6 @@
 package com.lubiekakao1212.qulib.math.extensions
 
+import com.lubiekakao1212.qulib.math.lerp
 import net.minecraft.util.math.Box
 import org.joml.Vector3d
 
@@ -28,4 +29,12 @@ object AABBExtensions {
 
 operator fun Box.contains(point: Vector3d) : Boolean {
     return this.contains(point.x, point.y, point.z)
+}
+
+fun Box.interpolate(x: Double, y: Double, z: Double, dst : Vector3d = Vector3d()) : Vector3d {
+    return dst.set(
+        lerp(minX, maxX, x),
+        lerp(minY, maxY, y),
+        lerp(minZ, maxZ, z),
+    )
 }
