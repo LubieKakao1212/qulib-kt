@@ -36,7 +36,7 @@ class RandomEx : Random {
     }
 
     fun nextOnCircle(radius : Double = 1.0) : Vector2d {
-        val theta = nextDouble()
+        val theta = nextDouble() * PI * 2f
         return Vector2d(cos(theta), sin(theta)).mul(radius)
     }
 
