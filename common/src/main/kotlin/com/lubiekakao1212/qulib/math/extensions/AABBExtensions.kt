@@ -3,6 +3,8 @@ package com.lubiekakao1212.qulib.math.extensions
 import com.lubiekakao1212.qulib.math.lerp
 import net.minecraft.util.math.Box
 import org.joml.Vector3d
+import kotlin.math.abs
+import kotlin.math.min
 
 object AABBExtensions {
     fun fromCorners(corner1 : Vector3d, corner2 : Vector3d) : Box {
@@ -17,13 +19,13 @@ object AABBExtensions {
             corner.x + size.x, corner.y + size.y, corner.z + size.z)
     }
 
-    fun fromCenterSize(corner : Vector3d, size : Vector3d) : Box {
+    fun fromCenterSize(center : Vector3d, size : Vector3d) : Box {
         val x1 = size.x / 2.0
         val y1 = size.y / 2.0
         val z1 = size.z / 2.0
         return Box(
-            corner.x - x1, corner.y - y1, corner.z - z1,
-            corner.x + x1, corner.y + y1, corner.z + z1)
+            center.x - x1, center.y - y1, center.z - z1,
+            center.x + x1, center.y + y1, center.z + z1)
     }
 }
 
@@ -37,4 +39,24 @@ fun Box.interpolate(x: Double, y: Double, z: Double, dst : Vector3d = Vector3d()
         lerp(minY, maxY, y),
         lerp(minZ, maxZ, z),
     )
+}
+
+fun Box.sqrDistanceTo(point : Vector3d) : Double {
+    var r = 0.0
+    r += boxAxisPoint(point.x, minX, maxX)
+    r += boxAxisPoint(point.y, minY, maxY)
+    r += boxAxisPoint(point.z, minZ, maxZ)
+    return r
+}
+
+private fun boxAxisPoint(p : Double, min : Double, max : Double) : Double {
+    var r = 0.0
+    if(p < min) {
+        r = min - p
+    }
+    else if(p > max) {
+        r = p - max
+    }
+
+    return r * r
 }

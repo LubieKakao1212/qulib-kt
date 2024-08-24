@@ -46,10 +46,10 @@ class RandomEx : Random {
     }
 
     fun nextOnSphere(radius : Double = 1.0) : Vector3d {
-        var phi = nextDouble() * PI * 2
-        var costheta = nextDouble() * 2 - 1
-        var theta = acos(costheta)
-        var sintheta = sin(theta)
+        val phi = nextDouble() * PI * 2
+        val costheta = nextDouble() * 2 - 1
+        val theta = acos(costheta)
+        val sintheta = sin(theta)
 
         return Vector3d(
             sintheta * cos(phi),
