@@ -3,8 +3,6 @@ package com.lubiekakao1212.qulib.math.extensions
 import com.lubiekakao1212.qulib.math.lerp
 import net.minecraft.util.math.Box
 import org.joml.Vector3d
-import kotlin.math.abs
-import kotlin.math.min
 
 object AABBExtensions {
     fun fromCorners(corner1 : Vector3d, corner2 : Vector3d) : Box {

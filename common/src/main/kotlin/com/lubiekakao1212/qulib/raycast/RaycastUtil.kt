@@ -52,14 +52,15 @@ fun raycastBlocksAll(level: World, origin: Vector3d, direction: Vector3d, range:
     }
 }
 
+//TODO add result filter predicate
 fun raycastBlocksUntil(level: World, origin: Vector3d, direction: Vector3d, range: Double, enterFirst : Boolean = true, continuationPredicate : (RaycastHit<BlockStatePos>) -> Boolean): List<RaycastHit<BlockStatePos>> {
     val result: MutableList<RaycastHit<BlockStatePos>> = mutableListOf()
 
     raycastGridUntil(origin, direction, range, enterFirst) {
-        addIfValid(
+        var hit = addIfValid(
             result, level, it.target, it.intersection
         )
-        continuationPredicate(result.last())
+        continuationPredicate(hit)
     }
 
     return result
@@ -235,17 +236,16 @@ private fun addIfValid(
     level: World,
     pos: Vector3i,
     intersections: IntersectionPoints
-) : Boolean {
+) : RaycastHit<BlockStatePos> {
     val blockPos = BlockPos(pos.x, pos.y, pos.z)
     val blockState: BlockState = level.getBlockState(blockPos)
+    val result = RaycastHit(
+        intersections,
+        BlockStatePos(blockState, blockPos, level)
+    )
+
     if (!blockState.isAir) {
-        addTo.add(
-            RaycastHit(
-                intersections,
-                BlockStatePos(blockState, blockPos, level)
-            )
-        )
-        return true
+        addTo.add(result)
     }
-    return false
+    return result
 }
