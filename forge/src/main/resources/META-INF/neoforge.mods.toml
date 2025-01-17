@@ -14,7 +14,7 @@ Vector math utilities library.
 logoFile = "../icon.png"
 
 [[dependencies.qulib]]
-modId = "forge"
+modId = "neoforge"
 mandatory = true
 versionRange = "[45,)"
 ordering = "NONE"

@@ -1,7 +1,7 @@
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.9.22"
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.3-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
 }
 
 //Load Access Properties (ghReadPAT, ghUsr)
@@ -51,6 +51,9 @@ allprojects {
         withSourcesJar()
     }
 
+    architectury {
+        compileOnly()
+    }
     /*kotlin {
         withSourcesJar()
     }*/
@@ -64,13 +67,13 @@ subprojects {
     }
 
     base {
-        archivesName = "$rootProject.archives_base_name-${project.loader}-$minecraft_version"
+        archivesName = "$rootProject.archives_base_name-${project.loader}"
     }
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
         // The following line declares the yarn mappings you may select this one as well.
-        mappings "net.fabricmc:yarn:1.19.4+build.2:v2"
+        mappings "net.fabricmc:yarn:$yarn_mappings:v2"
     }
 
     publishing {

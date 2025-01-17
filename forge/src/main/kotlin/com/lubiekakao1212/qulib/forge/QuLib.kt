@@ -1,4 +1,4 @@
-package com.lubiekakao1212.qulib
+package com.lubiekakao1212.qulib.forge
 
 import net.minecraftforge.fml.common.Mod
 
