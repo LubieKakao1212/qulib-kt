@@ -79,7 +79,7 @@ subprojects {
     publishing {
         publications {
             maven(MavenPublication) {
-                artifactId = "$rootProject.archives_base_name-${project.loader}-$minecraft_version"
+                artifactId = "$rootProject.archives_base_name-${project.loader}"
                 from components.java
             }
         }
